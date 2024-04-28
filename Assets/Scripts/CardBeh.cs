@@ -88,6 +88,7 @@ class CardBeh : MonoBehaviour
         {
             if (face0 != null)
                 spriteRenderer.sprite = face0;
+            Destroy(gameObject);
         }
     }
 
@@ -121,34 +122,34 @@ class CardBeh : MonoBehaviour
             var otherCardBeh = otherCard.GetComponent<CardBeh>(); 
             if (otherCardBeh.colors != colors)
             {
-                int othervalue = otherCardBeh.value;
-                if (othervalue <= value)
-                {
-                    StartCoroutine(OpenCards());
-                    //StartCoroutine(otherCardBeh.OpenCards());
-                    StartCoroutine(MergeLogic(othervalue));
-                }
+                StartCoroutine(OpenCards());
+                StartCoroutine(MergeLogic(otherCardBeh));
+            }
+            else 
+            {
+                ComebackCard();
             }
         }
+        else
+        {
+            ComebackCard();
+        }
+    }
+
+    private void ComebackCard()
+    {
         isMove = false;
         transform.position = startPos;
         spriteRenderer.sortingOrder = sortingLayerStart;
     }
 
-    IEnumerator MergeLogic(int othervalue)
+    IEnumerator MergeLogic(CardBeh otherCardBeh)
     {
-        startPos = otherCard.GetComponent<CardBeh>().startPos;
+        otherCardBeh.value -= value;
         yield return new WaitForSeconds(0.1f);
-        value -= othervalue;
+        otherCardBeh.ValueCheck();
         yield return new WaitForSeconds(0.1f);
-        ValueCheck();
-        yield return new WaitForSeconds(0.1f);
-        Destroy(otherCard);
-        yield return new WaitForSeconds(0.1f);
-        if (value <= 0)
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
         yield return new WaitForSeconds(0.1f);
     }
 
