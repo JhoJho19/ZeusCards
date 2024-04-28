@@ -5,19 +5,34 @@ using UnityEngine;
 public class Checker : MonoBehaviour
 {
     [SerializeField] CardBeh cardBeh;
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        Debug.Log("Триггер");
-    }
+    //[SerializeField] GameObject dependentCard1;
+    //[SerializeField] GameObject dependentCard2;
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        Debug.Log("Выход");
-        CardBeh cardBehCollision = collision.GetComponent<CardBeh>();
-        if (cardBehCollision != null)
-        {
-            if (cardBehCollision.cartForOpen1 == cardBeh || cardBehCollision.cartForOpen2 == cardBeh)
-                cardBeh.Open();
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    isCheckStart = false;
+    //}
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    cardBehCollision = collision.GetComponent<CardBeh>();
+    //    isCheckStart = true;
+    //}
+
+    //private void Update()
+    //{
+    //    if (isCheckStart) 
+    //    {
+    //        if (cardBehCollision != null)
+    //        {
+    //            if (cardBehCollision.cartForOpen1 == cardBeh || cardBehCollision.cartForOpen2 == cardBeh)
+    //            {
+    //                if (dependentCard1 == null && dependentCard2 == null)
+    //                {
+    //                    cardBeh.Open();
+    //                    cardBeh.StartCheck();
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
 }

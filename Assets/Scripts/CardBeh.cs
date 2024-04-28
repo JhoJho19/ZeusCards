@@ -20,8 +20,8 @@ class CardBeh : MonoBehaviour
     [SerializeField] bool isOpen;
     [SerializeField] BoxCollider2D boxCollider;
     [SerializeField] CircleCollider2D circleCollider;
-    public CardBeh cartForOpen1;
-    public CardBeh cartForOpen2;
+    [SerializeField] GameObject dependentCard1;
+    [SerializeField] GameObject dependentCard2;
     GameObject otherCard;
 
     private void Start()
@@ -31,7 +31,7 @@ class CardBeh : MonoBehaviour
         StartCheck();
     }
 
-    private void StartCheck()
+    public void StartCheck()
     {
         if (isOpen)
         { ValueCheck(); boxCollider.enabled = true; circleCollider.enabled = true; }
@@ -39,30 +39,39 @@ class CardBeh : MonoBehaviour
         { spriteRenderer.sprite = back; boxCollider.enabled = false; circleCollider.enabled = false; }
     }
 
-    IEnumerator OpenCards()
+    private void FixedUpdate()
     {
-        //if ( cartForOpen1 != null )
-        //{
-        //    Debug.Log("открываем карту 1");
-        //    cartForOpen1.isOpen = true;
-        //    cartForOpen1.StartCheck();
-        //}
-        //yield return null;
-        //if (cartForOpen2 != null)
-        //{
-        //    Debug.Log("открываем карту 2");
-        //    cartForOpen2.isOpen = true;
-        //    cartForOpen2.StartCheck();
-        //}
-        //yield return null;
-        //if (cartForOpen3 != null)
-        //{
-        //    Debug.Log("открываем карту 3");
-        //    cartForOpen3.isOpen = true;
-        //    cartForOpen3.StartCheck();
-        //}
-        yield return null;
+        if (dependentCard1 == null && dependentCard2 == null)
+        {
+            isOpen = true;
+            StartCheck();
+        }
     }
+
+    //IEnumerator OpenCards()
+    //{
+    //    if (cartForOpen1 != null)
+    //    {
+    //        Debug.Log("открываем карту 1");
+    //        cartForOpen1.isOpen = true;
+    //        cartForOpen1.StartCheck();
+    //    }
+    //    yield return null;
+    //    if (cartForOpen2 != null)
+    //    {
+    //        Debug.Log("открываем карту 2");
+    //        cartForOpen2.isOpen = true;
+    //        cartForOpen2.StartCheck();
+    //    }
+    //    yield return null;
+    //    //if (cartForOpen3 != null)
+    //    //{
+    //    //    Debug.Log("открываем карту 3");
+    //    //    cartForOpen3.isOpen = true;
+    //    //    cartForOpen3.StartCheck();
+    //    //}
+    //    yield return null;
+    //}
 
     public void ValueCheck()
     {
@@ -119,22 +128,17 @@ class CardBeh : MonoBehaviour
     {
         if (otherCard != null)
         {
-            var otherCardBeh = otherCard.GetComponent<CardBeh>(); 
-            if (otherCardBeh != null)
+            var otherCardBeh = otherCard.GetComponent<CardBeh>();
             {
                 if (otherCardBeh.colors != colors)
                 {
-                    StartCoroutine(OpenCards());
+                    //StartCoroutine(OpenCards());
                     StartCoroutine(MergeLogic(otherCardBeh));
                 }
                 else
                 {
                     ComebackCard();
                 }
-            }
-            else
-            {
-                ComebackCard();
             }
         }
         else
@@ -158,7 +162,7 @@ class CardBeh : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         if (otherCardBeh.value <= 0)
         {
-            otherCardBeh.OpenCards();
+            //otherCardBeh.OpenCards();
             yield return new WaitForSeconds(0.1f);
             Destroy(otherCardBeh.gameObject);
         }
@@ -168,8 +172,10 @@ class CardBeh : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer != 2)
-        { otherCard = collision.gameObject; }
+        if (collision.gameObject.layer == 0)
+        {
+            otherCard = collision.gameObject;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -180,7 +186,6 @@ class CardBeh : MonoBehaviour
     public void Open()
     {
         isOpen = true;
-        ValueCheck();
     }    
 }
 
