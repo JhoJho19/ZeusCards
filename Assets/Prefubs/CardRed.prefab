@@ -160,6 +160,7 @@ MonoBehaviour:
   circleCollider: {fileID: 634925792850187047}
   cartForOpen1: {fileID: 0}
   cartForOpen2: {fileID: 0}
+  cartForOpen3: {fileID: 0}
 --- !u!58 &634925792850187047
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -194,7 +195,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 1.5
 --- !u!58 &4602376023724867940
 CircleCollider2D:
   m_ObjectHideFlags: 0

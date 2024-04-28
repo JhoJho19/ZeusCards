@@ -20,8 +20,8 @@ class CardBeh : MonoBehaviour
     [SerializeField] bool isOpen;
     [SerializeField] BoxCollider2D boxCollider;
     [SerializeField] CircleCollider2D circleCollider;
-    [SerializeField] CardBeh cartForOpen1;
-    [SerializeField] CardBeh cartForOpen2;
+    public CardBeh cartForOpen1;
+    public CardBeh cartForOpen2;
     GameObject otherCard;
 
     private void Start()
@@ -41,19 +41,26 @@ class CardBeh : MonoBehaviour
 
     IEnumerator OpenCards()
     {
-        if ( cartForOpen1 != null )
-        {
-            Debug.Log("открываем карту 1");
-            cartForOpen1.isOpen = true;
-            cartForOpen1.StartCheck();
-        }
-        yield return null;
-        if (cartForOpen2 != null)
-        {
-            Debug.Log("открываем карту 2");
-            cartForOpen2.isOpen = true;
-            cartForOpen2.StartCheck();
-        }
+        //if ( cartForOpen1 != null )
+        //{
+        //    Debug.Log("открываем карту 1");
+        //    cartForOpen1.isOpen = true;
+        //    cartForOpen1.StartCheck();
+        //}
+        //yield return null;
+        //if (cartForOpen2 != null)
+        //{
+        //    Debug.Log("открываем карту 2");
+        //    cartForOpen2.isOpen = true;
+        //    cartForOpen2.StartCheck();
+        //}
+        //yield return null;
+        //if (cartForOpen3 != null)
+        //{
+        //    Debug.Log("открываем карту 3");
+        //    cartForOpen3.isOpen = true;
+        //    cartForOpen3.StartCheck();
+        //}
         yield return null;
     }
 
@@ -88,14 +95,7 @@ class CardBeh : MonoBehaviour
         {
             if (face0 != null)
                 spriteRenderer.sprite = face0;
-            Destroy(gameObject);
         }
-    }
-
-    private void ValueMinus(int decreament)
-    {
-        value -= decreament;
-        ValueCheck();
     }
 
     void OnMouseDown()
@@ -120,12 +120,19 @@ class CardBeh : MonoBehaviour
         if (otherCard != null)
         {
             var otherCardBeh = otherCard.GetComponent<CardBeh>(); 
-            if (otherCardBeh.colors != colors)
+            if (otherCardBeh != null)
             {
-                StartCoroutine(OpenCards());
-                StartCoroutine(MergeLogic(otherCardBeh));
+                if (otherCardBeh.colors != colors)
+                {
+                    StartCoroutine(OpenCards());
+                    StartCoroutine(MergeLogic(otherCardBeh));
+                }
+                else
+                {
+                    ComebackCard();
+                }
             }
-            else 
+            else
             {
                 ComebackCard();
             }
@@ -149,21 +156,32 @@ class CardBeh : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         otherCardBeh.ValueCheck();
         yield return new WaitForSeconds(0.1f);
+        if (otherCardBeh.value <= 0)
+        {
+            otherCardBeh.OpenCards();
+            yield return new WaitForSeconds(0.1f);
+            Destroy(otherCardBeh.gameObject);
+        }
         Destroy(gameObject);
         yield return new WaitForSeconds(0.1f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Триггер ентер");
-        otherCard = collision.gameObject;
+        if (collision.gameObject.layer != 2)
+        { otherCard = collision.gameObject; }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Триггер аут");
         otherCard = null;
     }
+
+    public void Open()
+    {
+        isOpen = true;
+        ValueCheck();
+    }    
 }
 
 public enum Colors 
