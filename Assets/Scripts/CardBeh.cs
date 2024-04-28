@@ -125,7 +125,7 @@ class CardBeh : MonoBehaviour
                 if (othervalue <= value)
                 {
                     StartCoroutine(OpenCards());
-                    StartCoroutine(otherCardBeh.OpenCards());
+                    //StartCoroutine(otherCardBeh.OpenCards());
                     StartCoroutine(MergeLogic(othervalue));
                 }
             }
