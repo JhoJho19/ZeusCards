@@ -23,12 +23,14 @@ class CardBeh : MonoBehaviour
     [SerializeField] GameObject dependentCard1;
     [SerializeField] GameObject dependentCard2;
     GameObject otherCard;
+    MovesCounter movesCounter;
 
     private void Start()
     {
         sortingLayerStart = spriteRenderer.sortingOrder;
         startPos = transform.position;
         StartCheck();
+        movesCounter = FindObjectOfType<MovesCounter>();
     }
 
     public void StartCheck()
@@ -47,31 +49,6 @@ class CardBeh : MonoBehaviour
             StartCheck();
         }
     }
-
-    //IEnumerator OpenCards()
-    //{
-    //    if (cartForOpen1 != null)
-    //    {
-    //        Debug.Log("открываем карту 1");
-    //        cartForOpen1.isOpen = true;
-    //        cartForOpen1.StartCheck();
-    //    }
-    //    yield return null;
-    //    if (cartForOpen2 != null)
-    //    {
-    //        Debug.Log("открываем карту 2");
-    //        cartForOpen2.isOpen = true;
-    //        cartForOpen2.StartCheck();
-    //    }
-    //    yield return null;
-    //    //if (cartForOpen3 != null)
-    //    //{
-    //    //    Debug.Log("открываем карту 3");
-    //    //    cartForOpen3.isOpen = true;
-    //    //    cartForOpen3.StartCheck();
-    //    //}
-    //    yield return null;
-    //}
 
     public void ValueCheck()
     {
@@ -133,6 +110,7 @@ class CardBeh : MonoBehaviour
                 if (otherCardBeh.colors != colors)
                 {
                     StartCoroutine(MergeLogic(otherCardBeh));
+                    movesCounter.MovesCounterMinus();
                 }
                 else
                 {

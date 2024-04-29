@@ -10,11 +10,12 @@ public class MovesCounter : MonoBehaviour
 
     private void Start()
     {
-        RefreshMovesCoiunter();
+        textMeshProUGUI.text = moves.ToString();
     }
 
-    private void RefreshMovesCoiunter()
+    public void MovesCounterMinus()
     {
+        moves--;
         textMeshProUGUI.text = moves.ToString();
     }
 }
