@@ -132,7 +132,6 @@ class CardBeh : MonoBehaviour
             {
                 if (otherCardBeh.colors != colors)
                 {
-                    //StartCoroutine(OpenCards());
                     StartCoroutine(MergeLogic(otherCardBeh));
                 }
                 else
