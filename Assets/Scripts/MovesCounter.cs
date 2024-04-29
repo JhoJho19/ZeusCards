@@ -6,7 +6,7 @@ using UnityEngine;
 public class MovesCounter : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI textMeshProUGUI;
-    [SerializeField] int moves;
+    public int moves;
 
     private void Start()
     {
@@ -16,6 +16,12 @@ public class MovesCounter : MonoBehaviour
     public void MovesCounterMinus()
     {
         moves--;
+        textMeshProUGUI.text = moves.ToString();
+    }
+
+    public void MovesCounterPlus()
+    {
+        moves++;
         textMeshProUGUI.text = moves.ToString();
     }
 }

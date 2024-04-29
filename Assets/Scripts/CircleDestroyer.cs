@@ -1,10 +1,15 @@
+using System.Collections;
 using UnityEngine;
 
 public class CircleDestroyer : MonoBehaviour
 {
+    [SerializeField] Sprite destroyerSprite;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] MovesCounter movesCounter;
     Vector3 startPos;
     private bool isMove = false;
     private float offset;
+    GameObject objectToDestroy;
 
     private void Start()
     {
@@ -13,6 +18,7 @@ public class CircleDestroyer : MonoBehaviour
 
     void OnMouseDown()
     {
+        spriteRenderer.sprite = destroyerSprite;
         offset = Vector3.Distance(transform.position, Camera.main.transform.position);
         isMove = true;
     }
@@ -29,12 +35,35 @@ public class CircleDestroyer : MonoBehaviour
 
     void OnMouseUp()
     {
+        if (objectToDestroy != null)
+        {
+            StartCoroutine(MoveAndDestroy(objectToDestroy));
+            movesCounter.MovesCounterMinus();
+            movesCounter.MovesCounterMinus();
+        }
+
+        spriteRenderer.sprite = null;
         isMove = false;
         transform.position = startPos;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.ToString());
+        objectToDestroy = collision.gameObject;
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        objectToDestroy = null;
+    }
+
+    IEnumerator MoveAndDestroy(GameObject objectToDestroy)
+    {
+        for (int i = 11; i <= 15; i++)
+        {
+            objectToDestroy.transform.position = new Vector3(transform.position.x, transform.position.y + i, transform.position.z);
+            yield return new WaitForSeconds(0.01f);
+        }
+        Destroy(objectToDestroy);
     }
 }

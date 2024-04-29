@@ -106,16 +106,23 @@ class CardBeh : MonoBehaviour
         if (otherCard != null)
         {
             var otherCardBeh = otherCard.GetComponent<CardBeh>();
+            if (otherCardBeh != null)
             {
-                if (otherCardBeh.colors != colors)
                 {
-                    StartCoroutine(MergeLogic(otherCardBeh));
-                    movesCounter.MovesCounterMinus();
+                    if (otherCardBeh.colors != colors)
+                    {
+                        StartCoroutine(MergeLogic(otherCardBeh));
+                        movesCounter.MovesCounterMinus();
+                    }
+                    else
+                    {
+                        ComebackCard();
+                    }
                 }
-                else
-                {
-                    ComebackCard();
-                }
+            }
+            else
+            {
+                ComebackCard();
             }
         }
         else
@@ -139,12 +146,11 @@ class CardBeh : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         if (otherCardBeh.value <= 0)
         {
-            //otherCardBeh.OpenCards();
-            yield return new WaitForSeconds(0.1f);
-            Destroy(otherCardBeh.gameObject);
+            StartCoroutine(MoveAndDestroy(otherCardBeh.gameObject));
+            yield return new WaitForSeconds(0.16f);
         }
-        Destroy(gameObject);
-        yield return new WaitForSeconds(0.1f);
+        StartCoroutine(MoveAndDestroy(gameObject));
+        yield return new WaitForSeconds(0.16f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -163,7 +169,17 @@ class CardBeh : MonoBehaviour
     public void Open()
     {
         isOpen = true;
-    }    
+    }
+
+    IEnumerator MoveAndDestroy(GameObject objectToDestroy)
+    {
+        for (int i = 11; i <= 15; i++)
+        {
+            objectToDestroy.transform.position = new Vector3(transform.position.x, transform.position.y + i, transform.position.z);
+            yield return new WaitForSeconds(0.01f);
+        }
+        Destroy(objectToDestroy);
+    }
 }
 
 public enum Colors 
