@@ -20,8 +20,13 @@ public class MovesCounter : MonoBehaviour
     {
         moves--;
 
-        if (moves < 0)
+        if (moves <= 0)
+        {
             moves = 0;
+            if (loseWinLogic == null)
+                loseWinLogic = FindObjectOfType<LoseWinLogic>();
+            loseWinLogic.IsWeWinWithZero();
+        }
 
         textMeshProUGUI.text = moves.ToString();
 
@@ -29,7 +34,6 @@ public class MovesCounter : MonoBehaviour
             lightnings = FindObjectOfType<Lightnings>();
         lightnings.RandomizeLightning();
 
-        Invoke("CheckWin", 0.5f);
     }
 
     public void MovesCounterPlus()
@@ -39,14 +43,13 @@ public class MovesCounter : MonoBehaviour
         if (lightnings == null)
             lightnings = FindObjectOfType<Lightnings>();
         lightnings.RandomizeLightning();
+        //CheckWin();
+    }
 
-        Invoke("CheckWin", 0.5f);
-    }
-    
-    private void CheckWin()
-    {
-        if (loseWinLogic == null)
-            loseWinLogic = FindObjectOfType<LoseWinLogic>();
-        loseWinLogic.WinChecker();
-    }
+    //private void CheckWin()
+    //{
+    //    if (loseWinLogic == null)
+    //        loseWinLogic = FindObjectOfType<LoseWinLogic>();
+    //    loseWinLogic.WinCheckerMinus();
+    //}
 }

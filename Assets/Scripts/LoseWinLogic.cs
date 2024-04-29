@@ -11,15 +11,37 @@ public class LoseWinLogic : MonoBehaviour
     [SerializeField] Canvas canvasWin;
     [SerializeField] Canvas canvasLose;
 
-    public void WinChecker()
+    public void IsWeWinWithZero()
+    {
+        if(goldCards1 == null && goldCards2 == null && goldCards3 == null && goldCards4 == null)
+        {
+            canvasWin.gameObject.SetActive(true);
+        }
+        else
+        {
+            Invoke("Lose", 0.5f);
+        }
+    }
+
+    private void Lose()
+    {
+        canvasLose.gameObject.SetActive(true);
+    }
+
+    private void FixedUpdate()
+    {
+        IsWeWinWithZOutero();
+    }
+
+    public void IsWeWinWithZOutero()
     {
         if (goldCards1 == null && goldCards2 == null && goldCards3 == null && goldCards4 == null)
         {
             canvasWin.gameObject.SetActive(true);
         }
-        else if(FindObjectOfType<MovesCounter>().moves <= 0)
+        else
         {
-            canvasLose.gameObject.SetActive(true);
+            return;
         }
     }
 }
