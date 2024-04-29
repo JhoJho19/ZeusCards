@@ -19,8 +19,8 @@ public class Lightnings : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             lighnings[randomIndex].SetActive(false);
             yield return new WaitForSeconds(0.1f);
+            FindObjectOfType<LoseWinLogic>().IsWeWin();
+            yield return new WaitForSeconds(0.5f);
         }
     }
-
-
 }

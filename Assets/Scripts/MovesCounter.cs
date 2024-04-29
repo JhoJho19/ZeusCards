@@ -23,9 +23,9 @@ public class MovesCounter : MonoBehaviour
         if (moves <= 0)
         {
             moves = 0;
-            if (loseWinLogic == null)
-                loseWinLogic = FindObjectOfType<LoseWinLogic>();
-            loseWinLogic.IsWeWinWithZero();
+            //if (loseWinLogic == null)
+            //    loseWinLogic = FindObjectOfType<LoseWinLogic>();
+            //loseWinLogic.IsWeWin();
         }
 
         textMeshProUGUI.text = moves.ToString();
