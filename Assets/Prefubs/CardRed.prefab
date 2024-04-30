@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6474571779805122155}
   - component: {fileID: 634925792850187047}
   - component: {fileID: 4602376023724867940}
+  - component: {fileID: 5101036602709512694}
   m_Layer: 0
   m_Name: CardRed
   m_TagString: Untagged
@@ -158,9 +159,8 @@ MonoBehaviour:
   isOpen: 1
   boxCollider: {fileID: 1609799815904270059}
   circleCollider: {fileID: 634925792850187047}
-  cartForOpen1: {fileID: 0}
-  cartForOpen2: {fileID: 0}
-  cartForOpen3: {fileID: 0}
+  dependentCard1: {fileID: 0}
+  dependentCard2: {fileID: 0}
 --- !u!58 &634925792850187047
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -231,3 +231,30 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.5
+--- !u!50 &5101036602709512694
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1115929599309107154}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

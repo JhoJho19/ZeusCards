@@ -88,7 +88,7 @@ class CardBeh : MonoBehaviour
     {
         offset = Vector3.Distance(transform.position, Camera.main.transform.position);
         isMove = true;
-        spriteRenderer.sortingOrder = 10;
+        spriteRenderer.sortingOrder = 11;
     }
 
     private void OnMouseDrag()
