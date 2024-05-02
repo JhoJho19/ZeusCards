@@ -22,8 +22,10 @@ class CardBeh : MonoBehaviour
     [SerializeField] CircleCollider2D circleCollider;
     [SerializeField] GameObject dependentCard1;
     [SerializeField] GameObject dependentCard2;
+    [SerializeField] GameObject hint;
     GameObject otherCard;
     MovesCounter movesCounter;
+    AudioManager audioManager;
 
     private void Start()
     {
@@ -140,6 +142,15 @@ class CardBeh : MonoBehaviour
 
     IEnumerator MergeLogic(CardBeh otherCardBeh)
     {
+        if(hint != null)
+        { Destroy(hint); }
+
+        if (audioManager == null)
+        { 
+            audioManager = FindObjectOfType<AudioManager>();
+            audioManager.PlayThunderSound();
+        }
+
         otherCardBeh.value -= value;
         yield return new WaitForSeconds(0.1f);
         otherCardBeh.ValueCheck();

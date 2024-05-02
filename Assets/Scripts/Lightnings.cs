@@ -7,7 +7,10 @@ public class Lightnings : MonoBehaviour
     [SerializeField] GameObject [] lighnings;
     public void RandomizeLightning()
     {
-        StartCoroutine(RandomizeLightnings());
+        if (lighnings != null)
+        {
+            StartCoroutine(RandomizeLightnings());
+        }
     }
 
     IEnumerator RandomizeLightnings()
@@ -22,5 +25,10 @@ public class Lightnings : MonoBehaviour
             FindObjectOfType<LoseWinLogic>().IsWeWin();
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }

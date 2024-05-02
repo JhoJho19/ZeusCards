@@ -6,6 +6,7 @@ public class CircleDestroyer : MonoBehaviour
     [SerializeField] Sprite destroyerSprite;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] MovesCounter movesCounter;
+    [SerializeField] GameObject hint;
     Vector3 startPos;
     private bool isMove = false;
     private float offset;
@@ -37,6 +38,9 @@ public class CircleDestroyer : MonoBehaviour
     {
         if (objectToDestroy != null)
         {
+            if (hint != null)
+            { Destroy(hint); }
+            FindObjectOfType<AudioManager>().PlayThunderSound();
             StartCoroutine(MoveAndDestroy(objectToDestroy));
             movesCounter.MovesCounterMinus();
             movesCounter.MovesCounterMinus();
